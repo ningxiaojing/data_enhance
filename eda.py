@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
 import jieba
 import synonyms
 import random
 from random import shuffle
+import os
+
+
 random.seed(2019)
 
 #停用词列表，默认使用哈工大停用词表
@@ -161,15 +165,17 @@ def result_file(orige_file,after_file,n):
 
 if __name__ == '__main__':
     orige_train = 'cnews/cnews.train.txt'
-
-    # after_train = 'cnews_sougou_1/cnews.train.txt'
-    # result_file(orige_train, after_train, 1)
-
-    after_train = 'cnews_sougou_2/cnews.train.txt'
-    result_file(orige_train, after_train, 2)
-
-    # after_train = 'cnews_sougou_3/cnews.train.txt'
-    # result_file(orige_train, after_train,3)
-    #
-    # after_train = 'cnews_sougou_4/cnews.train.txt'
-    # result_file(orige_train, after_train,4)
+    
+    # 起始点与终点
+    pos_start = 1
+    pos_stop = 8
+    
+    for i in range(pos_start, pos_stop+1):
+        dir_result = 'cnews_sougou_' + str(i)
+        
+        # 文件夹不存在则建立文件夹
+        if not os.path.exists(dir_result):
+            os.makedirs(dir_result)
+    
+        after_train = dir_result + r'/cnews.train.txt'
+        result_file(orige_train, after_train, i)
